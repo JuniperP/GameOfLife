@@ -1,5 +1,5 @@
-from world import World
 from enum import Enum
+from world import World
 
 
 class WorldType(Enum):
@@ -28,7 +28,7 @@ class Simulation:
         """
         Returns the current world.
         """
-        return World()  # TODO - Replace with actual world
+        return World(1)  # TODO - Replace with actual world
 
     def step(self) -> None:
         """

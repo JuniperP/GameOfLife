@@ -11,12 +11,13 @@ class World:
 
         :param size: the size of the world
         """
+        
         pass
 
     @property
     def size(self) -> int:
         """
-        Retruns the size of the world.
+        Returns the size of the world.
         """
         return 1  # TODO - Replace with actual size
 
@@ -32,6 +33,8 @@ class World:
         # row = row % self.size
         # col = col % self.size
         # return self.cells[row][col]
+
+        
         return 0  # TODO - Replace with actual cell state
 
     def __setitem__(self, key: tuple[int, int], value: int) -> None:
@@ -42,6 +45,7 @@ class World:
         pass
 
     def is_alive(self, row: int, col: int) -> bool:
+    
         """
         Determines if the cell at the specified row and column is alive.
         Cells on borders wrap around to the other side when checking their neighbors.
@@ -58,6 +62,8 @@ class World:
         :return: the number of alive neighbors of the cell at the specified location
         """
         return 0  # TODO - Replace with actual value
+
+    
 
 
 class Random(World):
@@ -76,3 +82,6 @@ class Glider(World):
 
     def __init__(self):
         pass
+
+class Cell()
+.
