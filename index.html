@@ -7,21 +7,24 @@
     <title>replit</title>
     <link rel="stylesheet" href="https://pyscript.net/releases/2024.3.2/core.css" />
     <script defer type="module" src="https://pyscript.net/releases/2024.3.2/core.js"></script>
-    <script type="py" src="./py/main.py" config="pyscript.json"></script>
+    <script type="py" src="./py/src/interface/interfaceUnimp.py" config="pyscript.json"></script>
 </head>
 
 <body>
     <h1>Game Of Life Simulation</h1>
 
     <button id=click_me py-click="change_button">Click Me!</button>
-    <input id="world size" name="world size" placeholder="World Size" value="" />
-    <script type="py" config="pyscript.json" terminal>
-        import math
-        print(math.sqrt(25))
-        main()
-    </script>
 
+    <label for="size_slider">Size: </label>
+    <input name="size slider" id="size_slider" type="range" min="1" max="100" value="50" class="slider">
+    <p>Value: <span id="size_value"></span></p>
 
+    <label for="world_select"> Select World: </label>
+    <select name="worlds" id="world_select">
+        <option value="random">Random</option>
+        <option value="pulsar">Pulsar</option>
+        <option value="glider gun">Glider Gun</option>
+    </select>
 
 </body>
 
