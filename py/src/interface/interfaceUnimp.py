@@ -1,6 +1,8 @@
 from pyscript import document
 from pyodide.ffi.wrappers import add_event_listener
+from input import Slider
 # from simul.simulation import WorldType, Simulation
+# from grid import Grid
 
 
 def change_button(event):
@@ -10,16 +12,18 @@ def change_button(event):
 
 print("Hello World")
 
+# def init_slider():
+#     size_slider = document.getElementById("size_slider")
+#     size_display = document.getElementById("size_value")
 
-def init_slider():
-    size_slider = document.getElementById("size_slider")
-    size_display = document.getElementById("size_value")
+#     def update_slider(event):
+#         size_display.innerText = size_slider.value
+#         print(type(event))
 
-    def update_slider(event):
-        size_display.innerText = size_slider.value
+#     update_slider(None)
+#     add_event_listener(size_slider, "input", update_slider)
 
-    update_slider(None)
-    add_event_listener(size_slider, "input", update_slider)
+mySlider = Slider("size_slider", "size_value")
 
 
 world_select = document.getElementById("world-select")
@@ -34,5 +38,3 @@ def world():
         print("glider")
 
 
-if __name__ == "__main__":
-    init_slider()
