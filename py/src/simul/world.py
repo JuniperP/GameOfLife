@@ -1,3 +1,6 @@
+import numpy as np
+from numpy._typing import NDArray
+
 class World:
     """
     This class represents a world of cells.
@@ -12,7 +15,7 @@ class World:
         :param size: the size of the world
         """
         self._size = size
-        # self._array = np.zeros((size, size), dtype=np.int8)
+        self._array: NDArray = np.zeros((size, size), dtype=bool)
 
     @property
     def size(self) -> int:
@@ -33,12 +36,10 @@ class World:
         :return: the state of the cell at the specified row and column
         :rtype: bool
         """
-        # row, col = key
-        # row = row % self.size
-        # col = col % self.size
-        # return self.cells[row][col]
-
-        return False  # TODO - Replace with actual cell state
+        row, col = key
+        row %= self.size
+        col %= self.size
+        return self._array[row][col]
 
     def __setitem__(self, key: tuple[int, int], value: bool) -> None:
         """
@@ -48,9 +49,12 @@ class World:
         :param tuple[int, int] key: a tuple containing the row and column indices
         :param bool value: the new state of the cell at the specified row and column
         """
-        pass
+        row, col = key
+        row %= self.size
+        col %= self.size
+        self._array[row][col] = value
 
-    def _is_alive(self, row: int, col: int) -> bool:
+    def is_alive(self, row: int, col: int) -> bool:
         """
         Determines if the cell at the specified row and column SHOULD be alive.
         For example, an alive cell surrounded by 9 dead cells will die.
