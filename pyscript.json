@@ -1,3 +1,11 @@
 {
-    "packages": ["numpy"]
+    "packages": ["numpy"],
+    "files": {
+        "{SRC}": "py/packaged",
+        "{SRC}/interface.zip": "interface/interface.zip",
+        "{SRC}/simul.zip": "simul/simul.zip",
+        "py/src/interface/input.py": "input.py",
+        "py/src/interface/grid.py": "grid.py",
+        "py/src/simul/world.py": "world.py"
+    }
 }

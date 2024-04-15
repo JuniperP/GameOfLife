@@ -1,14 +1,14 @@
 from pyscript import document
 from pyodide.ffi.wrappers import add_event_listener
-from input import Slider
+from input import Slider, Button
+from grid import Grid
+from world import World
 # from simul.simulation import WorldType, Simulation
-# from grid import Grid
 
 
 def change_button(event):
     button_text = "Click Me More!"
     document.getElementById("click_me").innerText = button_text
-
 
 print("Hello World")
 
@@ -25,6 +25,7 @@ print("Hello World")
 
 mySlider = Slider("size_slider", "size_value")
 
+myGrid = Grid(World(6))
 
 world_select = document.getElementById("world-select")
 
@@ -36,5 +37,3 @@ def world():
         print("pulsar")
     elif world_select.value == "glider":
         print("glider")
-
-

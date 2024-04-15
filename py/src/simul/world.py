@@ -19,7 +19,7 @@ class World:
         """
         Returns the size of the world.
         """
-        return 1  # TODO - Replace with actual size
+        return 6  # TODO - Replace with actual size
 
     def __getitem__(self, key: tuple[int, int]) -> int:
         """
@@ -82,6 +82,3 @@ class Glider(World):
 
     def __init__(self):
         pass
-
-class Cell()
-.
