@@ -4,6 +4,8 @@ from pyscript import document
 
 class Grid:
 
+    GRID_TEMPLATE = '<td id="{row},{col}" class="cell_{living_dead}"></td>'
+    
     def __init__(self, world: World, grid_id: str = "grid"):
         """
         Creates a new grid as a HTML table representing the world values.
@@ -25,7 +27,11 @@ class Grid:
 
             for col in range(self._world.size):
                 living_text: str = "alive" if self._world[row, col] else "dead"
-                grid_HTML += f'<td id="{row},{col}" class="cell_{living_text}"></td>'
+                grid_HTML += self.GRID_TEMPLATE.format(
+                    row=row,
+                    col=col,
+                    living_dead=living_text,
+                )
 
             grid_HTML += "</tr>"
 
