@@ -1,3 +1,4 @@
+from py.src.interface.input import Dropdown
 from pyscript import document
 from pyodide.ffi.wrappers import add_event_listener
 from input import Slider, Button
@@ -24,16 +25,8 @@ print("Hello World")
 #     add_event_listener(size_slider, "input", update_slider)
 
 mySlider = Slider("size_slider", "size_value")
+myDropDown = Dropdown("world_select", ")
 
 myGrid = Grid(World(6))
 
 world_select = document.getElementById("world-select")
-
-
-def world():
-    if world_select.value == "random":
-        print("random")
-    elif world_select.value == "pulsar":
-        print("pulsar")
-    elif world_select.value == "glider":
-        print("glider")
