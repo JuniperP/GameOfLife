@@ -4,6 +4,7 @@ from pyscript import document
 
 class Grid:
 
+    # Constant for the HTML element of the table data cell
     GRID_TEMPLATE = '<td id="{row},{col}" class="cell_{living_dead}"></td>'
     
     def __init__(self, world: World, grid_id: str = "grid"):
@@ -26,7 +27,7 @@ class Grid:
             grid_HTML += "<tr>"
 
             for col in range(self._world.size):
-                living_text: str = "alive" if self._world[row, col] else "dead"
+                living_text = "alive" if self._world[row, col] else "dead"
                 grid_HTML += self.GRID_TEMPLATE.format(
                     row=row,
                     col=col,
