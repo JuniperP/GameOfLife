@@ -30,35 +30,41 @@ class World:
     def __getitem__(self, key: tuple[int, int]) -> bool:
         """
         Allows accessing the cell state at the specified (row, column) using array indexing.
-        Cells outside of bounds will be wrapped to the other side.
+        Cells outside of bounds ARE ASSUMED DEAD.
 
         :param tuple[int, int] key: a tuple containing the row and column indices
         :return: the state of the cell at the specified row and column
         :rtype: bool
         """
         row, col = key
-        row %= self.size
-        col %= self.size
+
+        # If outside of bounds, assume dead
+        if row < 0 or row >= self._size or col < 0 or col >= self._size:
+            return False
+
         return self._array[row][col]
 
     def __setitem__(self, key: tuple[int, int], value: bool) -> None:
         """
         Allows setting the cell state at the specified (row, column) using array indexing.
-        Cells outside of bounds will be wrapped to the other side.
+        This method does nothing when the indicies are outside of bounds.
 
         :param tuple[int, int] key: a tuple containing the row and column indices
         :param bool value: the new state of the cell at the specified row and column
         """
         row, col = key
-        row %= self.size
-        col %= self.size
+
+        # If outside of bounds, return
+        if row < 0 or row >= self._size or col < 0 or col >= self._size:
+            return
+
         self._array[row][col] = value
 
     def will_live(self, row: int, col: int) -> bool:
         """
         Determines if the cell at the specified row and column SHOULD be alive.
         For example, an alive cell surrounded by 9 dead cells will die.
-        Cells on borders wrap around to the other side when checking their neighbors.
+        Cells on borders are considered dead.
 
         :param int row: the row index of the cell
         :param int col: the column index of the cell
@@ -75,7 +81,7 @@ class World:
     def _count_neighbors(self, row: int, col: int) -> int:
         """
         Counts the number of alive neighbors of the cell at the specified row and column.
-        Cells on borders wrap around to the other side when counting their neighbors.
+        Cells on borders are considered dead.
 
         :param int row: the row index of the cell
         :param int col: the column index of the cell
@@ -106,29 +112,26 @@ class Random(World):
     Each cell is either alive or dead based on the life probability value. 
     """
 
-    def __init__(self, probability: float) -> None:
+    def __init__(self, size: int, probability: float) -> None:
         """
         Creates a new random world.
 
         :param float probability: the probability of a cell being alive
         """
-        pass
+        self._size = size
 
-    def randomize(self) -> None:
-        """
-        Randomizes the world by setting each cell to either alive or dead based
-        on the probability value.
-        """
-        pass
+        # Set each cell to either alive or dead based on the probability
+        self._array: np.ndarray = np.random.choice(
+            [True, False], size=(size, size), p=[probability, 1 - probability])
 
 
 class Pulsar(World):
     """
     This class represents a pulsar world.
-    Grid starts with cyclical pattern alternates between three different patterns   
+    Grid starts with cyclical pattern and alternates between three different patterns. 
     """
 
-    def __init__(self) -> None:
+    def __init__(self, size: int) -> None:
         """
         Creates a new pulsar world.
         """
@@ -141,7 +144,7 @@ class Glider(World):
     The glider moves across the grid by moving the cells.
     """
 
-    def __init__(self) -> None:
+    def __init__(self, size: int) -> None:
         """
         Creates a new glider world.
         """
