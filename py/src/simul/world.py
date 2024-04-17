@@ -1,5 +1,5 @@
 import numpy as np
-from numpy._typing import NDArray
+
 
 class World:
     """
@@ -15,7 +15,7 @@ class World:
         :param size: the size of the world
         """
         self._size = size
-        self._array: NDArray = np.zeros((size, size), dtype=bool)
+        self._array: np.ndarray = np.zeros((size, size), dtype=bool)
 
     @property
     def size(self) -> int:
@@ -54,7 +54,7 @@ class World:
         col %= self.size
         self._array[row][col] = value
 
-    def is_alive(self, row: int, col: int) -> bool:
+    def will_live(self, row: int, col: int) -> bool:
         """
         Determines if the cell at the specified row and column SHOULD be alive.
         For example, an alive cell surrounded by 9 dead cells will die.
@@ -65,8 +65,12 @@ class World:
         :return: whether the cell at the specified location is alive
         :rtype: bool
         """
+        neighbors = self._count_neighbors(row, col)
 
-        return True  # TODO - Replace with actual value
+        if self[row, col]:  # Living cases
+            return neighbors == 2 or neighbors == 3  # Keep alive if 2 or 3 neighbors
+        else:  # Dead cases
+            return neighbors == 3  # Reproduce with exactly 3 neighbors
 
     def _count_neighbors(self, row: int, col: int) -> int:
         """
@@ -78,7 +82,22 @@ class World:
         :return: the number of alive neighbors of the cell at the specified location
         :rtype: int
         """
-        return 0  # TODO - Replace with actual value
+
+        neighbors = 0
+
+        # Check the 3x3 surrounding the provided cell location
+        # Check row above through below
+        for row_check in range(row - 1, row + 2):
+            # Check column left through right
+            for col_check in range(col - 1, col + 2):
+                if self[row_check, col_check]:
+                    neighbors += 1
+
+        # Subtract out if the middle cell itself is alive
+        if self[row, col]:
+            neighbors -= 1
+
+        return neighbors
 
 
 class Random(World):
