@@ -1,4 +1,6 @@
 from collections.abc import Callable
+
+from numpy import select
 from pyscript import document
 from pyodide.ffi.wrappers import add_event_listener
 from pyodide.ffi import JsProxy
@@ -44,7 +46,7 @@ class Slider(Input):
         :param Callable[[JsProxy], None] | None on_update: an optional callback function to be called when the slider is moved
         """
         super().__init__(input_id, "input", on_update)
-        
+
         self._display = document.getElementById(value_id)
         self._update_display(None)
         add_event_listener(self._input, "input", self._update_display)
@@ -76,7 +78,7 @@ class Slider(Input):
 
         :param int value: the new minimum value
         """
-        pass
+        self._input.min = value
 
     @property
     def max(self) -> int:
@@ -95,7 +97,7 @@ class Slider(Input):
 
         :param int value: the new maximum value
         """
-        pass
+        self._input.max = value
 
     def _update_display(self, event) -> None:
         """
@@ -111,16 +113,34 @@ class Dropdown(Input):
 
     def __init__(self,
                  select_id: str,
-                 option_values: list[str],
                  on_update: Callable[[JsProxy], None] | None = None) -> None:
         """
         This creates a new dropdown object with the provided ID
 
         :param str select_id: the ID of the dropdown select element
-        :param list[str] option_values: a list of possible options in the dropdown
         :param Callable[[JsProxy], None] | None on_update: an optional callback function to be called when the dropdown is updated
         """
-        pass
+        super().__init__(select_id, "change", on_update)
+
+    @property
+    def options(self) -> list[str]:
+        """
+        Returns a list of the options in the dropdown.
+
+        :return: a list of the options in the dropdown
+        :rtype: list[str]
+        """
+        return [option.value for option in self._input.options]
+
+    @property
+    def value(self) -> str:
+        """
+        Returns the current value of the dropdown.
+
+        :return: the current value of the dropdown
+        :rtype: str
+        """
+        return self._input.value
 
 
 class Button(Input):
@@ -137,4 +157,4 @@ class Button(Input):
         :param str button_id: the ID of the button element
         :param Callable[[JsProxy], None] | None on_click: an optional callback function to be called when the button is clicked
         """
-        pass
+        super().__init__(button_id, "click", on_click)
