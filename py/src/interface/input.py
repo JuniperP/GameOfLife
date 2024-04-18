@@ -1,6 +1,5 @@
 from collections.abc import Callable
 
-from numpy import select
 from pyscript import document
 from pyodide.ffi.wrappers import add_event_listener
 from pyodide.ffi import JsProxy
@@ -35,7 +34,6 @@ class Slider(Input):
 
     def __init__(self,
                  input_id: str,
-                 value_id: str,
                  on_update: Callable[[JsProxy], None] | None = None) -> None:
         """
         Creates a new slider object with the provided IDs and updates the value
@@ -47,10 +45,6 @@ class Slider(Input):
         """
         super().__init__(input_id, "input", on_update)
 
-        self._display = document.getElementById(value_id)
-        self._update_display(None)
-        add_event_listener(self._input, "input", self._update_display)
-
     @property
     def value(self) -> int:
         """
@@ -59,7 +53,14 @@ class Slider(Input):
         :return: the current value of the slider
         :rtype: int
         """
-        return self._input.value
+        return int(self._input.value)
+        
+    @value.setter
+    def value(self, value: int) -> None:
+        """
+        Sets the value of the slider.
+        """
+        self._input.value = value
 
     @property
     def min(self) -> int:
@@ -99,11 +100,74 @@ class Slider(Input):
         """
         self._input.max = value
 
-    def _update_display(self, event) -> None:
+
+class Numerical(Input):
+    """
+    This class creates a number input object that can be used to enter a number.
+    """
+
+    def __init__(self,
+            input_id: str,
+            on_update: Callable[[JsProxy], None] | None = None) -> None:
+        super().__init__(input_id, "input", on_update)
+
+    @property
+    def value(self) -> int:
         """
-        Updates the display value to the slider's value.
+        Returns the current value on the numerical.
+
+        :return: the current value of the numerical
+        :rtype: int
         """
-        self._display.innerText = self.value
+        try:
+            return int(self._input.value)
+        except ValueError:
+            return 1
+
+    @value.setter
+    def value(self, value: int) -> None:
+        """
+        Sets the value of the numerical.
+        """
+        self._input.value = value
+        
+    @property
+    def min(self) -> int:
+        """
+        Returns the minimum numerical value.
+
+        :return: the minimum numerical value
+        :rtype: int
+        """
+        return self._input.min
+
+    @min.setter
+    def min(self, value: int) -> None:
+        """
+        Sets the minimum value of the numerical.
+
+        :param int value: the new minimum value
+        """
+        self._input.min = value
+
+    @property
+    def max(self) -> int:
+        """
+        Returns the maximum numerical size.
+
+        :return: the maximum numerical size
+        :rtype: int
+        """
+        return self._input.max
+
+    @max.setter
+    def max(self, value: int) -> None:
+        """
+        Sets the maximum value of the numerical.
+
+        :param int value: the new maximum value
+        """
+        self._input.max = value
 
 
 class Dropdown(Input):
