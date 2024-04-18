@@ -5,8 +5,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
     <title>replit</title>
+    
     <link rel="stylesheet" href="https://pyscript.net/releases/2024.3.2/core.css" />
     <link rel="stylesheet" href="css/cell.css" />
+    <link rel="stylesheet" href="css/color.css" />
+    
     <script defer type="module" src="https://pyscript.net/releases/2024.3.2/core.js"></script>
     <script type="py" src="./py/src/main.py" config="pyscript.json"></script>
 </head>
@@ -14,12 +17,18 @@
 <body>
     <h1>Game Of Life Simulation</h1>
 
-    <button id=click_me py-click="change_button">Click Me!</button>
+    <button id="world_generate" class = "button_color_lav" >Generate World</button>
+    <button id="world_step" class = "button_color_green">Step 1 Generation</button>
+    <button id="start_stop" class = "button_color_lav" >Start / Stop</button>
 
     <label for="size_slider">Size: </label>
-    <input name="size slider" id="size_slider" type="range" min="1" max="100" value="50" class="slider">
-    <p>Value: <span id="size_value"></span></p>
+    <label for="quantity">Quantity (between 10 and 50):</label>
+    <input type="number" id="size_num" name="quantity" min="10" max="50", value="25"> 
+    <input name="size slider" id="size_slider" type="range" min="10" max="50" value="25" class="slider">
+    
 
+
+    
     <label for="world_select"> Select World: </label>
     <select name="worlds" id="world_select">
         <option value="random">Random</option>
@@ -28,7 +37,7 @@
     </select>
 
     <table name="Game of Life Grid" id="grid"></table>
-
+          
 </body>
 
 </html>
