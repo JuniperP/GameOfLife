@@ -1,5 +1,5 @@
 from enum import Enum
-from world import World, Random, Pulsar, Glider
+from simul.world import World, Random, Pulsar, Glider
 
 
 class WorldType(Enum):

@@ -1,5 +1,5 @@
-from world import World
 from pyscript import document
+from simul.world import World
 
 
 class Grid:

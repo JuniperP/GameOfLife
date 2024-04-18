@@ -1,10 +1,10 @@
 from pyscript import document
 from pyodide.ffi.wrappers import add_event_listener
-from input import Slider, Button, Dropdown, Numerical
-from grid import Grid
-from simulation import Simulation, WorldType
-from world import World, Random, Pulsar, Glider
-# from simul.simulation import WorldType, Simulation
+
+from interface.input import Slider, Button, Dropdown, Numerical
+from interface.grid import Grid
+from simul.simulation import Simulation, WorldType
+from simul.world import World, Random, Pulsar, Glider
 
 
 def main():
@@ -25,19 +25,20 @@ def main():
 
     def updateSlider(event):
         mySlider.value = myNumerical.value
-        
+
     def updateSliderMin(event):
         pass
 
     def startStop(event):
         pass
-    
+
     myNumerical = Numerical("size_num", updateSlider)
     mySlider = Slider("size_slider", updateNumerical)
     generate_world_btn = Button("world_generate", generateWorld)
     stepButton = Button("world_step", simulationStep)
     startStopButton = Button("start_stop", startStop)
     myDropDown = Dropdown("world_select")
+
 
 if __name__ == "__main__":
     main()
