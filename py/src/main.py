@@ -8,13 +8,14 @@ from simul.world import World, Random, Pulsar, Glider
 
 
 def main():
-    global mySim, myGrid, myWorld, myWorldType, mySlider, myButton, myDropdown
+    global mySim, myGrid, myWorldType, mySlider, myDropdown
 
     def generateWorld(event):
-        global mySim, myGrid, mySlider, myDropDown
+        global mySim, myGrid, mySlider, myWorldType, myDropDown
         mySim = Simulation(mySlider.value, WorldType.PULSAR)
         myGrid = Grid(mySim.world, "grid")
-        
+        stepButton.disabled = False
+        startStopButton.disabled = False
 
     def simulationStep(event):
         global mySim, myGrid
@@ -32,13 +33,14 @@ def main():
 
     def startStop(event):
         pass
-
+    
     myNumerical = Numerical("size_num", updateSlider)
     mySlider = Slider("size_slider", updateNumerical)
     generate_world_btn = Button("world_generate", generateWorld)
     stepButton = Button("world_step", simulationStep)
     startStopButton = Button("start_stop", startStop)
     myDropDown = Dropdown("world_select")
+
 
 
 if __name__ == "__main__":

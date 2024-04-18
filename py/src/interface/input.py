@@ -26,6 +26,30 @@ class Input:
         if event_type and on_update:
             add_event_listener(self._input, event_type, on_update)
 
+    @property
+    def disabled(self) -> bool:
+        """
+        Returns whether the input element is disabled or not.
+
+        :return: whether the input element is disabled or not
+        :rtype: bool
+        """
+
+        return self._input.disabled == ""
+
+    @disabled.setter
+    def disabled(self, value: bool) -> None:
+        """
+        Sets whether the input element is disabled or not.
+
+        :param bool value: whether the input element should be disabled or not
+        """
+
+        if value:
+            self._input.disabled = ""
+        else:
+            self._input.removeAttribute("disabled")
+
 
 class Slider(Input):
     """
@@ -54,7 +78,7 @@ class Slider(Input):
         :rtype: int
         """
         return int(self._input.value)
-        
+
     @value.setter
     def value(self, value: int) -> None:
         """
@@ -107,8 +131,8 @@ class Numerical(Input):
     """
 
     def __init__(self,
-            input_id: str,
-            on_update: Callable[[JsProxy], None] | None = None) -> None:
+                 input_id: str,
+                 on_update: Callable[[JsProxy], None] | None = None) -> None:
         super().__init__(input_id, "input", on_update)
 
     @property
@@ -130,7 +154,7 @@ class Numerical(Input):
         Sets the value of the numerical.
         """
         self._input.value = value
-        
+
     @property
     def min(self) -> int:
         """
