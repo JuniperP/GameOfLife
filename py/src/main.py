@@ -1,35 +1,43 @@
 from pyscript import document
 from pyodide.ffi.wrappers import add_event_listener
-from input import Slider, Button, Dropdown
+from input import Slider, Button, Dropdown, Numerical
 from grid import Grid
-from world import World
+from simulation import Simulation, WorldType
+from world import World, Random, Pulsar, Glider
 # from simul.simulation import WorldType, Simulation
 
-def change_button(event):
-    button_text = "Click Me More!"
-    document.getElementById("click_me").innerText = button_text
 
-print("Hello World")
+def main():
+    global mySim, myGrid, myWorld, myWorldType, mySlider, myButton, myDropdown
 
-# def init_slider():
-#     size_slider = document.getElementById("size_slider")
-#     size_display = document.getElementById("size_value")
+    def generateWorld(event):
+        global mySim, myGrid, mySlider
+        mySim = Simulation(mySlider.value, WorldType.RANDOM)
+        myGrid = Grid(mySim.world, "grid")
 
-#     def update_slider(event):
-#         size_display.innerText = size_slider.value
-#         print(type(event))
+    def simulationStep(event):
+        global mySim, myGrid
+        mySim.step()
+        myGrid.update(mySim.world)
 
-#     update_slider(None)
-#     add_event_listener(size_slider, "input", update_slider)
+    def updateNumerical(event):
+        myNumerical.value = mySlider.value
 
-mySlider = Slider("size_slider", "size_value")
+    def updateSlider(event):
+        mySlider.value = myNumerical.value
+        
+    def updateSliderMin(event):
+        pass
 
-myDropDown = Dropdown("world_select")
+    def startStop(event):
+        pass
+    
+    myNumerical = Numerical("size_num", updateSlider)
+    mySlider = Slider("size_slider", updateNumerical)
+    generate_world_btn = Button("world_generate", generateWorld)
+    stepButton = Button("world_step", simulationStep)
+    startStopButton = Button("start_stop", startStop)
+    myDropDown = Dropdown("world_select")
 
-myWorld = World(6)
-myWorld[0, 0] = True
-print(myWorld[0, 0])
-
-myGrid = Grid(myWorld)
-
-world_select = document.getElementById("world-select")
+if __name__ == "__main__":
+    main()
