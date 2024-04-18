@@ -1,5 +1,5 @@
 from enum import Enum
-from world import World
+from world import World, Random, Pulsar, Glider
 
 
 class WorldType(Enum):
@@ -15,29 +15,45 @@ class Simulation:
     of the simulation.
     """
 
-    def __init__(self, world_type: WorldType) -> None:
+    def __init__(self,
+                 world_size: int,
+                 world_type: WorldType,
+                 rand_chance: float = 0.5) -> None:
         """
         Creates a new simulation of the world type specified.
 
-        @param world_type: the type of world to use for the simulation
+        :param int world_size: the size of the world
+        :param WorldType world_type: the type of world to create
+        :param float rand_chance: the probability of a cell being alive for random worlds
         """
-        pass
+        self._world_type = world_type
+
+        match self._world_type:
+            case WorldType.RANDOM:
+                self._world = Random(world_size, rand_chance)
+            case WorldType.PULSAR:
+                self._world = Pulsar(world_size)
+            case WorldType.GLIDER:
+                self._world = Glider(world_size)
 
     @property
     def world(self) -> World:
         """
         Returns the current world.
+
+        :return: the current world being stored in the simulation
+        :rtype: World
         """
-        return World(1)  # TODO - Replace with actual world
+        return self._world
 
     def step(self) -> None:
         """
         Steps the simulation forward one generation.
         """
-        pass
+        futureWorld = World(self.world.size)
 
-    def reset(self) -> None:
-        """
-        Resets the simulation to the initial state.
-        """
-        pass
+        for row in range(self.world.size):
+            for col in range(self.world.size):
+                futureWorld[row, col] = self.world.will_live(row, col)
+
+        self._world = futureWorld
