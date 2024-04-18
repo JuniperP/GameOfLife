@@ -8,25 +8,25 @@ from simul.world import World, Random, Pulsar, Glider
 
 
 def main():
-    global mySim, myGrid, myWorldType, mySlider, myDropdown
+    global world_sim, grid, size_slider, type_selector
 
     def generateWorld(event):
-        global mySim, myGrid, mySlider, myWorldType, myDropDown
-        mySim = Simulation(mySlider.value, WorldType.PULSAR)
-        myGrid = Grid(mySim.world, "grid")
+        global world_sim, grid, size_slider, type_selector
+        world_sim = Simulation(size_slider.value, WorldType.PULSAR)
+        grid = Grid(world_sim.world, "grid")
         stepButton.disabled = False
         startStopButton.disabled = False
 
     def simulationStep(event):
-        global mySim, myGrid
-        mySim.step()
-        myGrid.update(mySim.world)
+        global world_sim, grid
+        world_sim.step()
+        grid.update(world_sim.world)
 
     def updateNumerical(event):
-        myNumerical.value = mySlider.value
+        myNumerical.value = size_slider.value
 
     def updateSlider(event):
-        mySlider.value = myNumerical.value
+        size_slider.value = myNumerical.value
 
     def updateSliderMin(event):
         pass
@@ -35,11 +35,11 @@ def main():
         pass
     
     myNumerical = Numerical("size_num", updateSlider)
-    mySlider = Slider("size_slider", updateNumerical)
-    generate_world_btn = Button("world_generate", generateWorld)
+    size_slider = Slider("size_slider", updateNumerical)
+    gen_button = Button("world_generate", generateWorld)
     stepButton = Button("world_step", simulationStep)
     startStopButton = Button("start_stop", startStop)
-    myDropDown = Dropdown("world_select")
+    type_selector = Dropdown("world_select")
 
 
 
