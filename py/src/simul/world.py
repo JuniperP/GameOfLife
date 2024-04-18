@@ -1,4 +1,6 @@
 import numpy as np
+import json
+import os
 
 
 class World:
@@ -15,6 +17,8 @@ class World:
         :param size: the size of the world
         """
         self._size = size
+
+        # Create a new numpy array with the specified size filled with zeros
         self._array: np.ndarray = np.zeros((size, size), dtype=bool)
 
     @property
@@ -74,7 +78,7 @@ class World:
         neighbors = self._count_neighbors(row, col)
 
         if self[row, col]:  # Living cases
-            return neighbors == 2 or neighbors == 3  # Keep alive if 2 or 3 neighbors
+            return neighbors in (2, 3)  # Keep alive if 2 or 3 neighbors
         else:  # Dead cases
             return neighbors == 3  # Reproduce with exactly 3 neighbors
 
@@ -125,17 +129,42 @@ class Random(World):
             [True, False], size=(size, size), p=[probability, 1 - probability])
 
 
+PRESET_FILE_NAME = os.path.join("simul", "world_templates.json")
+
+
 class Pulsar(World):
     """
     This class represents a pulsar world.
-    Grid starts with cyclical pattern and alternates between three different patterns. 
+    The grid starts with cyclical pattern and alternates between three different patterns.
+
+    Note: The pulsar requires a minimum size of 15 x 15 (size = 15).
     """
 
     def __init__(self, size: int) -> None:
         """
         Creates a new pulsar world.
         """
-        pass
+        self._size = size
+        
+        # Read the 2D JSON array from the file
+        with open(PRESET_FILE_NAME, "r") as file:
+            json_array = json.load(file)["pulsar"]
+
+        # Create a new numpy array with the specified size filled with zeros
+        self._array: np.ndarray = np.zeros((size, size), dtype=bool)
+
+        # Get the dimensions of the JSON array
+        json_rows = len(json_array)
+        json_cols = len(json_array[0])
+
+        # Calculate how many times the pattern can repeat
+        n_rows = size // json_rows
+        n_cols = size // json_cols
+
+        # Fill the array with the pattern
+        for row in range(n_rows * json_rows):
+            for col in range(n_cols * json_cols):
+                self._array[row][col] = json_array[row % json_rows][col % json_cols]
 
 
 class Glider(World):

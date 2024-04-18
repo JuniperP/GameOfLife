@@ -11,9 +11,10 @@ def main():
     global mySim, myGrid, myWorld, myWorldType, mySlider, myButton, myDropdown
 
     def generateWorld(event):
-        global mySim, myGrid, mySlider
-        mySim = Simulation(mySlider.value, WorldType.RANDOM)
+        global mySim, myGrid, mySlider, myDropDown
+        mySim = Simulation(mySlider.value, WorldType.PULSAR)
         myGrid = Grid(mySim.world, "grid")
+        
 
     def simulationStep(event):
         global mySim, myGrid
