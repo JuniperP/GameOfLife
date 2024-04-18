@@ -6,12 +6,13 @@ class Grid:
 
     # Constant for the HTML element of the table data cell
     GRID_TEMPLATE = '<td id="{row},{col}" class="cell_{living_dead}"></td>'
-    
+
     def __init__(self, world: World, grid_id: str = "grid"):
         """
         Creates a new grid as a HTML table representing the world values.
         
-        param: World world: Uses the world to display the grid
+        param: World world: the world to display with the grid
+        param: str grid_id: the ID of the HTML element of the grid
         """
         self._world: World = world
         self._grid_elem = document.getElementById(grid_id)
@@ -21,11 +22,13 @@ class Grid:
         """
         Creates the grid as a HTML table.
         """
-        grid_HTML = "<tbody>"
-        
-        for row in range(self._world.size):
-            grid_HTML += "<tr>"
+        grid_HTML = "<tbody>" # Start table body
 
+        # Create the rows
+        for row in range(self._world.size):
+            grid_HTML += "<tr>" # Start row
+
+            # Create a cell for every column of the row
             for col in range(self._world.size):
                 living_text = "alive" if self._world[row, col] else "dead"
                 grid_HTML += self.GRID_TEMPLATE.format(
@@ -34,13 +37,21 @@ class Grid:
                     living_dead=living_text,
                 )
 
-            grid_HTML += "</tr>"
+            grid_HTML += "</tr>" # Close row
 
-        grid_HTML += "</tbody>"
+        grid_HTML += "</tbody>" # Close table body
 
         self._grid_elem.innerHTML = grid_HTML
 
-    def repopulate(self):
+    def update(self, new_world: World):
         """
-        Changes the grid to the current world values.
+        Changes the grid to the new world values.
+
+        param: World new_world: the new world to display with the grid
         """
+        self._world = new_world
+        
+        for row in range(self._world.size):
+            for col in range(self._world.size):
+                living_text = "alive" if self._world[row, col] else "dead"
+                document.getElementById(f"{row},{col}").className = f"cell_{living_text}"
