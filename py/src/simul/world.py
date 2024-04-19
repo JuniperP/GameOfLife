@@ -137,7 +137,7 @@ class Pulsar(World):
     This class represents a pulsar world.
     The grid starts with cyclical pattern and alternates between three different patterns.
 
-    Note: The pulsar requires a minimum size of 15 x 15 (size = 15).
+    Note: The pulsar requires a minimum size of 17 x 17 (size = 17).
     """
 
     def __init__(self, size: int) -> None:
@@ -145,7 +145,7 @@ class Pulsar(World):
         Creates a new pulsar world.
         """
         self._size = size
-        
+
         # Read the 2D JSON array from the file
         with open(PRESET_FILE_NAME, "r") as file:
             json_array = json.load(file)["pulsar"]
@@ -169,12 +169,30 @@ class Pulsar(World):
 
 class Glider(World):
     """
-    This class represents a glider world.
-    The glider moves across the grid by moving the cells.
+    This class represents a pulsar world.
+    The grid starts with cyclical pattern and alternates between three different patterns.
+
+    Note: The glider requires a minimum size of 38 x 38 (size = 38).
     """
 
     def __init__(self, size: int) -> None:
         """
         Creates a new glider world.
         """
-        pass
+        self._size = size
+
+        # Read the 2D JSON array from the file
+        with open(PRESET_FILE_NAME, "r") as file:
+            json_array = json.load(file)["glider"]
+
+        # Create a new numpy array with the specified size filled with zeros
+        self._array: np.ndarray = np.zeros((size, size), dtype=bool)
+
+        # Get the dimensions of the JSON array
+        json_rows = len(json_array)
+        json_cols = len(json_array[0])
+
+        # Fill the array with the pattern
+        for row in range(min(size, json_rows)):
+            for col in range(min(size, json_cols)):
+                self._array[row][col] = json_array[row % json_rows][col % json_cols]
