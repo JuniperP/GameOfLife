@@ -1,0 +1,30 @@
+html *
+{
+    font-family: 'Segoe UI' !important;
+}
+
+.center {
+    text-align: center;
+    margin: 0 auto;
+}
+
+.spacing
+{
+    padding: 10px;
+}
+
+.button_color_lav
+{
+    width: 150px;
+    height: 25px;
+    background-color: #d9b3ff;
+    font-weight: 550;
+}
+
+.button_color_green
+{
+    width: 150px;
+    height: 25px;
+    background-color: #0dbf48;
+    font-weight: 550;
+}

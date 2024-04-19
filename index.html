@@ -4,39 +4,42 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
-    <title>replit</title>
+    <title>Game of Life Simulator</title>
 
     <link rel="stylesheet" href="https://pyscript.net/releases/2024.3.2/core.css" />
-    <link rel="stylesheet" href="css/cell.css" />
-    <link rel="stylesheet" href="css/color.css" />
+    <link rel="stylesheet" href="css/grid.css" />
+    <link rel="stylesheet" href="css/style.css" />
 
     <script defer type="module" src="https://pyscript.net/releases/2024.3.2/core.js"></script>
     <script type="py" src="./py/src/main.py" config="pyscript.json"></script>
 </head>
 
-<body>
-    <h1>Game Of Life Simulation</h1>
+<body class="center">
 
-    <button id="world_generate" class="button_color_lav">Generate World</button>
-    <button id="world_step" class="button_color_green" disabled>Step 1 Generation</button>
-    <button id="start_stop" class="button_color_lav" disabled hidden>Start / Stop</button>
+    <h1>Game Of Life Simulator</h1>
 
-    <label for="size_slider">Size: </label>
-    <label for="quantity">Quantity (between 10 and 50):</label>
-    <input type="number" id="size_num" name="quantity" min="10" max="50" , value="25">
-    <input name="size slider" id="size_slider" type="range" min="10" max="50" value="25" class="slider">
+    <div name="Inputs" class="spacing">
+        <div name="Size Inputs">
+            <label for="Size slider">Size: </label>
+            <input name="Quantity" id="size_num" type="number" min="10" max="50" value="25">
+            <input name="Size Slider" id="size_slider" type="range" min="10" max="50" value="25">
+        </div>
 
+        <label for="World Types"> Select World: </label>
+        <select name="World Types" id="world_select">
+            <option value="random">Random</option>
+            <option value="pulsar">Pulsar</option>
+            <option value="glider">Glider</option>
+        </select>
+    </div>
 
+    <div name="Controls" class="spacing">
+        <button id="world_generate" class="button_color_lav">Generate World</button>
+        <button id="world_step" class="button_color_green" disabled>Step 1 Generation</button>
+        <button id="start_stop" class="button_color_lav" disabled hidden>Start / Stop</button>
+    </div>
 
-
-    <label for="world_select"> Select World: </label>
-    <select name="worlds" id="world_select">
-        <option value="random">Random</option>
-        <option value="pulsar">Pulsar</option>
-        <option value="glider">Glider</option>
-    </select>
-
-    <table name="Game of Life Grid" id="grid"></table>
+    <table name="Game of Life Grid" id="grid" class="center grid"></table>
 
 </body>
 

@@ -5,7 +5,7 @@ from simul.world import World
 class Grid:
 
     # Constant for the HTML element of the table data cell
-    GRID_TEMPLATE = '<td id="{row},{col}" class="cell_{living_dead}"></td>'
+    GRID_TEMPLATE = '<td id="{row},{col}" class="cell {living_dead}"></td>'
 
     def __init__(self, world: World, grid_id: str = "grid"):
         """
@@ -54,4 +54,4 @@ class Grid:
         for row in range(self._world.size):
             for col in range(self._world.size):
                 living_text = "alive" if self._world[row, col] else "dead"
-                document.getElementById(f"{row},{col}").className = f"cell_{living_text}"
+                document.getElementById(f"{row},{col}").className = f"cell {living_text}"
