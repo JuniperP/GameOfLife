@@ -172,7 +172,7 @@ class Glider(World):
     This class represents a pulsar world.
     The grid starts with cyclical pattern and alternates between three different patterns.
 
-    Note: The glider requires a minimum size of 38 x 38 (size = 38).
+    Note: The glider requires a minimum size of 9 x 36 (size = 38).
     """
 
     def __init__(self, size: int) -> None:
