@@ -1,4 +1,5 @@
 from enum import Enum
+import numpy as np
 from simul.world import World, Random, Pulsar, Glider
 
 
@@ -50,10 +51,10 @@ class Simulation:
         """
         Steps the simulation forward one generation.
         """
-        futureWorld = World(self.world.size)
+        new_array = np.empty((self._world.size, self._world.size), dtype=bool)
 
         for row in range(self.world.size):
             for col in range(self.world.size):
-                futureWorld[row, col] = self.world.will_live(row, col)
+                new_array[row, col] = self.world.will_live(row, col)
 
-        self._world = futureWorld
+        self._world._array = new_array

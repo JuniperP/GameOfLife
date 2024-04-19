@@ -22,11 +22,11 @@ class Grid:
         """
         Creates the grid as a HTML table.
         """
-        grid_HTML = "<tbody>" # Start table body
+        grid_HTML = "<tbody>"  # Start table body
 
         # Create the rows
         for row in range(self._world.size):
-            grid_HTML += "<tr>" # Start row
+            grid_HTML += "<tr>"  # Start row
 
             # Create a cell for every column of the row
             for col in range(self._world.size):
@@ -37,21 +37,18 @@ class Grid:
                     living_dead=living_text,
                 )
 
-            grid_HTML += "</tr>" # Close row
+            grid_HTML += "</tr>"  # Close row
 
-        grid_HTML += "</tbody>" # Close table body
+        grid_HTML += "</tbody>"  # Close table body
 
         self._grid_elem.innerHTML = grid_HTML
 
-    def update(self, new_world: World):
+    def update(self):
         """
-        Changes the grid to the new world values.
-
-        param: World new_world: the new world to display with the grid
+        Updates the grid to the current world values.
         """
-        self._world = new_world
-        
         for row in range(self._world.size):
             for col in range(self._world.size):
                 living_text = "alive" if self._world[row, col] else "dead"
-                document.getElementById(f"{row},{col}").className = f"cell {living_text}"
+                document.getElementById(
+                    f"{row},{col}").className = f"cell {living_text}"

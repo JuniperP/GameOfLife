@@ -46,7 +46,7 @@ def main():
         global world_sim, grid
         
         world_sim.step()
-        grid.update(world_sim.world)
+        grid.update()
 
     def updateNumerical(event):
         myNumerical.value = size_slider.value
