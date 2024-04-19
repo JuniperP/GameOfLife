@@ -6,19 +6,37 @@ from interface.grid import Grid
 from simul.simulation import Simulation, WorldType
 from simul.world import World, Random, Pulsar, Glider
 
+def str_to_world_type(str: str) -> WorldType:
+    """
+    Converts a string to a WorldType enum value.
+
+    :param str str: the string to convert
+    :return: the WorldType enum value
+    :rtype: WorldType
+    """
+    match str:
+        case "random":
+            return WorldType.RANDOM
+        case "pulsar":
+            return WorldType.PULSAR
+        case "glider":
+            return WorldType.GLIDER
 
 def main():
     global world_sim, grid, size_slider, type_selector
 
     def generateWorld(event):
         global world_sim, grid, size_slider, type_selector
-        world_sim = Simulation(size_slider.value, WorldType.PULSAR)
+
+        world_type = str_to_world_type(type_selector.value)
+        world_sim = Simulation(size_slider.value, world_type)
         grid = Grid(world_sim.world, "grid")
         stepButton.disabled = False
         startStopButton.disabled = False
 
     def simulationStep(event):
         global world_sim, grid
+        
         world_sim.step()
         grid.update(world_sim.world)
 
@@ -40,7 +58,6 @@ def main():
     stepButton = Button("world_step", simulationStep)
     startStopButton = Button("start_stop", startStop)
     type_selector = Dropdown("world_select")
-
 
 
 if __name__ == "__main__":
